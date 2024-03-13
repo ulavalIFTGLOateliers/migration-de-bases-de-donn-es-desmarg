@@ -1,0 +1,209 @@
+{
+    "initial_state": {
+        "tables": {
+            "album": {
+                "values": [
+                    ["Concertos", "Luna", 2009, "Four Seasons"],
+                    ["Second Mystery", "Mysterio", 2021, "World Music"],
+                    ["World of Mysteries", "Mysterio", 2019, "Dark Matter"]
+                ],
+                "columns": ["albumName", "singerName", "year", "labelName"]
+            },
+            "label": {
+                "values": [
+                    ["Dark Matter", 2015, "rock"],
+                    ["Four Seasons", 1999, "classical"],
+                    ["World Music", 2002, "pop"]
+                ],
+                "columns": ["labelName", "creation", "genre"]
+            },
+            "singer": {
+                "values": [
+                    ["Alina", "Darcy", "Boles", 32],
+                    ["Luna", "Emily", "Seibold", 31],
+                    ["Mysterio", "Jessie", "Chancey", 23],
+                    ["Rainbow", "Sarah", "Derrick", 47]
+                ],
+                "columns": ["singerName", "firstName", "lastName", "age"]
+            }
+        },
+        "keys": {
+            "album": {
+                "primary": {
+                    "column_name": "albumName"
+                },
+                "foreign": [
+                    {
+                        "column_name": "labelName",
+                        "referenced_table_name": "label",
+                        "referenced_column_name": "labelName"
+                    },
+                    {
+                        "column_name": "singerName",
+                        "referenced_table_name": "singer",
+                        "referenced_column_name": "singerName"
+                    }
+                ]
+            },
+            "label": {
+                "primary": {
+                    "column_name": "labelName"
+                }
+            },
+            "singer": {
+                "primary": {
+                    "column_name": "singerName"
+                }
+            }
+        }
+    },
+    "after_migration_1": {
+        "tables": {
+            "album": {
+                "values": [
+                    ["Concertos", "Luna", 2009, "Four Seasons"],
+                    ["Second Mystery", "Mysterio", 2021, "World Music"],
+                    ["World of Mysteries", "Mysterio", 2019, "Dark Matter"]
+                ],
+                "columns": ["albumName", "singerName", "year", "labelName"]
+            },
+            "label": {
+                "values": [
+                    ["Dark Matter", 2015, "rock"],
+                    ["Four Seasons", 1999, "classical"],
+                    ["World Music", 2002, "pop"]
+                ],
+                "columns": ["labelName", "creation", "genre"]
+            },
+            "musician": {
+                "values": [
+                    ["Alina", "Darcy", "Boles", 32, "vocals", "Crazy Duo"],
+                    ["Luna", "Emily", "Seibold", 31, "piano", "Luna"],
+                    ["Mysterio", "Jessie", "Chancey", 23, "guitar", "Mysterio"],
+                    ["Rainbow", "Sarah", "Derrick", 47, "percussion", "Crazy Duo"]
+                ],
+                "columns": ["musicianName", "firstName", "lastName", "age", "role", "bandName"]
+            },
+            "band": {
+                "values": [
+                    ["Crazy Duo", 2015, "rock"],
+                    ["Luna", 2009, "classical"],
+                    ["Mysterio", 2019, "pop"]
+                ],
+                "columns": ["bandName", "creation", "genre"]
+            }
+        },
+        "keys": {
+            "album": {
+                "primary": {
+                    "column_name": "albumName"
+                },
+                "foreign": [
+                    {
+                        "column_name": "labelName",
+                        "referenced_table_name": "label",
+                        "referenced_column_name": "labelName"
+                    },
+                    {
+                        "column_name": "singerName",
+                        "referenced_table_name": "musician",
+                        "referenced_column_name": "musicianName"
+                    }
+                ]
+            },
+            "label": {
+                "primary": {
+                    "column_name": "labelName"
+                }
+            },
+            "musician": {
+                "primary": {
+                    "column_name": "musicianName"
+                }
+            },
+            "band": {
+                "primary": {
+                    "column_name": "bandName"
+                }
+            }
+        }
+    },
+    "after_migration_2": {
+        "tables": {
+            "album": {
+                "values": [
+                    ["Concertos", "Luna", 2009, "Four Seasons"],
+                    ["Second Mystery", "Mysterio", 2021, "World Music"],
+                    ["World of Mysteries", "Mysterio", 2019, "Dark Matter"]
+                ],
+                "columns": ["albumName", "bandName", "year", "labelName"]
+            },
+            "label": {
+                "values": [
+                    ["Dark Matter", 2015],
+                    ["Four Seasons", 1999],
+                    ["World Music", 2002]
+                ],
+                "columns": ["labelName", "creation"]
+            },
+            "musician": {
+                "values": [
+                    ["Alina", "Darcy", "Boles", 32, "vocals", "Crazy Duo"],
+                    ["Luna", "Emily", "Seibold", 31, "piano", "Luna"],
+                    ["Mysterio", "Jessie", "Chancey", 23, "guitar", "Mysterio"],
+                    ["Rainbow", "Sarah", "Derrick", 47, "percussion", "Crazy Duo"]
+                ],
+                "columns": ["musicianName", "firstName", "lastName", "age", "role", "bandName"]
+            },
+            "band": {
+                "values": [
+                    ["Crazy Duo", 2015, "rock"],
+                    ["Luna", 2009, "classical"],
+                    ["Mysterio", 2019, "pop"]
+                ],
+                "columns": ["bandName", "creation", "genre"]
+            }
+        },
+        "keys": {
+            "album": {
+                "primary": {
+                    "column_name": "albumName"
+                },
+                "foreign": [
+                    {
+                        "column_name": "labelName",
+                        "referenced_table_name": "label",
+                        "referenced_column_name": "labelName"
+                    },
+                    {
+                        "column_name": "bandName",
+                        "referenced_table_name": "band",
+                        "referenced_column_name": "bandName"
+                    }
+                ]
+            },
+            "label": {
+                "primary": {
+                    "column_name": "labelName"
+                }
+            },
+            "musician": {
+                "primary": {
+                    "column_name": "musicianName"
+                },
+                "foreign": [
+                    {
+                        "column_name": "bandName",
+                        "referenced_table_name": "band",
+                        "referenced_column_name": "bandName"
+                    }
+                ]
+            },
+            "band": {
+                "primary": {
+                    "column_name": "bandName"
+                }
+            }
+        }
+    }
+}

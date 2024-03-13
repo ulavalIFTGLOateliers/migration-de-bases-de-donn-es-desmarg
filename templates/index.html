@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Atelier BD</title>
+
+    <script src="../static/app.js"></script>
+    <link rel="stylesheet" href="../static/styles.css">
+</head>
+<body>
+
+    <div class="main">
+        <h1>
+            Atelier sur la migration de BD
+        </h1>
+
+        <h2>
+
+        </h2>
+
+        <h2>
+            État du schéma:
+            {% if migration_state == 0 %}
+                initial
+            {% else %}
+                {{migration_state}} migration(s) appliquée(s)
+            {% endif %}
+        </h2>
+
+        <div id="db-content">
+
+            <table class="full-width">
+                <tbody>
+                    <tr>
+                        {% for table in tables %}
+                            <td class="layout-column">
+                                <h3> Nom de la table: {{ table.name }} </h3>
+
+                                <table class="styled-table">
+                                    <thead>
+                                        <tr>
+                                            {% for column in table.columns %}
+                                                <th class="sql-table">{{ column }}</th>
+                                            {% endfor %}
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for entry in table.entries %}
+                                            <tr>
+                                                {% for value in entry %}
+                                                    <td class="sql-table">{{ value }}</td>
+                                                {% endfor %}
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                                <div>
+                                    <b>Clé primaire: </b> {{table.primary_key[0]}}
+                                </div>
+                                {% if table.foreign_keys|length > 0 %}
+                                    <div>
+                                        <b>Clés étrangères: </b>
+                                        {% for foreign_key in table.foreign_keys %}
+
+                                        <div>{{foreign_key.column_name}} --> {{foreign_key.referenced_table_name}}.{{foreign_key.referenced_column_name}}</div>
+
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </td>
+
+                        {% endfor %}
+                    </tr>
+                </tbody>
+            </table>
+
+
+
+        </div>
+
+        <hr>
+
+        <div class="actions">
+            <h2>
+                Actions
+            </h2>
+            <table class="actions-table">
+                <thead>
+                    <tr>
+                        <th>
+                            Rafraîchir le contenu
+                        </th>
+                        <th>
+                            Migrer la BD
+                        </th>
+                        <th>
+                            Faire un retour arrière (rollback) de la migration
+                        </th>
+                        <th>
+                            (Re)créer la BD
+                        </th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>
+                            <button class="button blue" onClick="window.location.reload();">Rafraîchir</button>
+                        </td>
+                        <td>
+                            <button class="button green" onclick="migrate()">Migrer</button>
+                            <span id="migrate-status"></span>
+                        </td>
+                        <td>
+                            <button class="button black" onclick="rollback()">Migration arrière</button>
+                            <span id="rollback-status"></span>
+                        </td>
+                        <td>
+                            <button class="button red" onclick="up()">Créer</button>
+                            <span id="up-status"></span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+    </div>
+</body>
+</html>
