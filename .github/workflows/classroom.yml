@@ -1,0 +1,32 @@
+name: Autograding Tests
+'on':
+- push
+- workflow_dispatch
+- repository_dispatch
+permissions:
+  checks: write
+  actions: read
+  contents: read
+jobs:
+  run-autograding-tests:
+    runs-on: ubuntu-latest
+    if: github.actor != 'github-classroom[bot]'
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Autograding
+      id: autograding
+      uses: education/autograding-command-grader@v1
+      with:
+        test-name: Autograding
+        setup-command: wget -O grading.sh https://raw.githubusercontent.com/ulavalIFTGLOateliers/IFT2004-GLO2005-Migration-Correction/master/grading.sh
+          && chmod 777 grading.sh
+        command: "./grading.sh"
+        timeout: 10
+        max-score: 9
+    - name: Autograding Reporter
+      uses: education/autograding-grading-reporter@v1
+      env:
+        AUTOGRADING_RESULTS: "${{steps.autograding.outputs.result}}"
+      with:
+        runners: autograding
